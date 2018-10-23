@@ -1,3 +1,4 @@
+import time 
 class Node(object):
  item = -1
  next = None
@@ -37,9 +38,11 @@ def Sol1 (root):
         root: root of the linked list to be sorted.
     Returns :
         returns nothing
+    Running Time:
+        O(n^2) 
     """
-     helper = root.next
-     while root.next is not None: 
+    helper = root.next
+    while root.next is not None: 
         while helper is not None:
             if helper.item == root.item:
                 print(helper.item," has a duplicate")
@@ -60,6 +63,8 @@ def Sol2 (root):
         root: root of the linked list
     Return:
         returns nothing
+    Running Time:
+    O(n^2)
     """ 
     swaps =  0
     Leading = root.next
@@ -95,11 +100,23 @@ def Merge(a,b):
     Returns:
         Pointerlist: sorted linked list that contains all the elements in linked list a and b
     """
+
+#    if a == None:
+#        return b
+#    if b == None:
+#        return a
+#    if a.item >= b.item:
+#       Flist = b
+#        Flist.next = Merge(a,b.next)
+#    else:
+#        Flist = a
+#        Flist.next = Merge(a.next,b)
+#    return Flist
     PointerA = a
     PointerB = b
     Pointerlist = None
     while PointerA is not None and PointerB is not None:
-        if PointerA.item <= PointerB.item:
+        if PointerA.item >= PointerB.item:
             Pointerlist = Node(PointerA.item,Pointerlist)
             PointerA = PointerA.next
         else:
@@ -126,25 +143,30 @@ def Mergesort(root):
     """
     if root is None or root.next is None :
         return root
-    Head = root 
-    Lagging = Head
-    Leading = Head
-    while  Leading.next.next is not None:
-        Lagging = Lagging.next
-        Leading = Leading.next.next
-        if Leading is None or Leading.next is None : 
-            break
+    if root.next.next== None:
+        LeftHalf = root
+        RightHalf = root.next
+        LeftHalf.next =None
+    else:
+        Head = root 
+        Lagging = Head
+        Leading = Head
+        while  Leading.next.next is not None:
+            Lagging = Lagging.next
+            Leading = Leading.next.next
+            if Leading is None or Leading.next is None : 
+                break
 #        if Leading is not None: 
 #            Leading = Leading.next
-    Rightmiddle = Lagging.next
+        Rightmiddle = Lagging.next
  #   middle = MiddleLL(Head)
  #   Rightmiddle = middle.next
 #    while Head is not None:
 #        print(Head.item)
 #        Head = Head.next
-    Lagging.next = None
-    LeftHalf = Mergesort(Head)
-    RightHalf = Mergesort(Rightmiddle)
+        Lagging.next = None
+        LeftHalf = Mergesort(Head)
+        RightHalf = Mergesort(Rightmiddle)
     sortedlist = Merge(LeftHalf, RightHalf)
     return sortedlist
 
@@ -158,8 +180,10 @@ def Sol3(root):
         root: root of linked list
     Return:
         returns nothing
+    Running time:
+     O(n*log(n))
     """
-    Sortedlist =Mergesort(root)
+    Sortedlist = Mergesort(root)
     Leading = Sortedlist
     while Leading.next is not None:
         print(Leading.item)
@@ -197,6 +221,8 @@ def Sol4(root):
         root: root of a linked list
     Returns:
         returns nothing
+    Running Time:
+     O(n)
     """
     m = GetMax(root)
     seen = [False]*(m+1)
@@ -207,11 +233,15 @@ def Sol4(root):
         else:
             seen[helper.item] = True
         helper = helper.next
-    
-file_name1 = str(input("Enter the name of the first file that contains ID's: ")) # activision.txt
-file_name2 = str(input("Enter the name of the second file that contains ID's: ")) # vivendi.txt
-root = getIDs(file_name1,file_name2)
-#Sol1(root)
-#Sol2(root)
-#Sol3(root)
-Sol4(root)
+
+def main():
+    file_name1 = str(input("Enter the name of the first file that contains ID's: ")) # activision.txt
+    file_name2 = str(input("Enter the name of the second file that contains ID's: ")) # vivendi.txt
+    root = getIDs(file_name1,file_name2)
+    start_time = time.time()    
+    #Sol1(root)
+    #Sol2(root)
+    Sol3(root)
+    #Sol4(root)
+    print("--- %s seconds ---" % (time.time() - start_time))
+main()
