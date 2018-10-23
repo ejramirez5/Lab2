@@ -101,17 +101,6 @@ def Merge(a,b):
         Pointerlist: sorted linked list that contains all the elements in linked list a and b
     """
 
-#    if a == None:
-#        return b
-#    if b == None:
-#        return a
-#    if a.item >= b.item:
-#       Flist = b
-#        Flist.next = Merge(a,b.next)
-#    else:
-#        Flist = a
-#        Flist.next = Merge(a.next,b)
-#    return Flist
     PointerA = a
     PointerB = b
     Pointerlist = None
@@ -156,14 +145,9 @@ def Mergesort(root):
             Leading = Leading.next.next
             if Leading is None or Leading.next is None : 
                 break
-#        if Leading is not None: 
-#            Leading = Leading.next
+
         Rightmiddle = Lagging.next
- #   middle = MiddleLL(Head)
- #   Rightmiddle = middle.next
-#    while Head is not None:
-#        print(Head.item)
-#        Head = Head.next
+
         Lagging.next = None
         LeftHalf = Mergesort(Head)
         RightHalf = Mergesort(Rightmiddle)
